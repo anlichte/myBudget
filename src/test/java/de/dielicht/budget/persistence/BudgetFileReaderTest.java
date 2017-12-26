@@ -1,4 +1,4 @@
-package de.dielicht;
+package de.dielicht.budget.persistence;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -9,6 +9,8 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import de.dielicht.budget.persistence.BudgetFileReader;
 
 public class BudgetFileReaderTest
 {

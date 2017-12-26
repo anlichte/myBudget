@@ -1,4 +1,4 @@
-package de.dielicht;
+package de.dielicht.budget.persistence;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
