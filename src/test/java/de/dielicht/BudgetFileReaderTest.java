@@ -47,5 +47,12 @@ public class BudgetFileReaderTest
     @Test
     public void testThatAnExistingFileIsNotOverwritten() throws IOException
     {
+        Map<String, String> budgetMap=this.bfr.readFile();
+        budgetMap.put("Andreas", "Millionär");
+        bfr.writeFile(budgetMap);
+
+        BudgetFileReader bfr2=new BudgetFileReader();
+        Map<String, String> budgetMap2=bfr2.readFile();
+        assertThat(budgetMap2.get("Andreas")).isEqualTo("Millionär");
     }
 }
