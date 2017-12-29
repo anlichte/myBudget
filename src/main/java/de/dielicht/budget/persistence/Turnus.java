@@ -1,43 +1,40 @@
 package de.dielicht.budget.persistence;
 
-public enum Turnus
-{
-    monthly
-    {
-        @Override
-        public int calculate(int betrag)
-        {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-    },
-    quarterly
-    {
-        @Override
-        public int calculate(int betrag)
-        {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-    },
-    halfYearly
-    {
-        @Override
-        public int calculate(int betrag)
-        {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-    },
-    annual
-    {
-        @Override
-        public int calculate(int betrag)
-        {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-    };
+import java.time.Month;
+import java.time.MonthDay;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-    abstract public int calculate(int betrag);
+public enum Turnus {
+	monthly {
+		@Override
+		public List<MonthDay> createTurnusPoints() {
+			return Arrays.stream(Month.values()).collect(Collectors.mapping(month -> MonthDay.of(month, 1),
+					Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList)));
+		}
+	},
+	quarterly {
+		@Override
+		public List<MonthDay> createTurnusPoints() {
+			return Collections.unmodifiableList(Arrays.asList(MonthDay.of(Month.JANUARY, 1),
+					MonthDay.of(Month.APRIL, 1), MonthDay.of(Month.JUNE, 1), MonthDay.of(Month.OCTOBER, 1)));
+		}
+	},
+	halfYearly {
+		@Override
+		public List<MonthDay> createTurnusPoints() {
+			return Collections
+					.unmodifiableList(Arrays.asList(MonthDay.of(Month.JANUARY, 1), MonthDay.of(Month.JUNE, 1)));
+		}
+	},
+	annual {
+		@Override
+		public List<MonthDay> createTurnusPoints() {
+			return Collections.singletonList(MonthDay.of(Month.JANUARY, 1));
+		}
+	};
+
+	abstract public List<MonthDay> createTurnusPoints();
 }
