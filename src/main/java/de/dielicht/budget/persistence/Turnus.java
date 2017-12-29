@@ -1,4 +1,4 @@
-package de.dielicht;
+package de.dielicht.budget.persistence;
 
 public enum Turnus
 {
