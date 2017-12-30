@@ -1,40 +1,62 @@
 package de.dielicht.budget.persistence;
 
-import java.time.Month;
+import java.time.LocalDate;
 import java.time.MonthDay;
+import java.time.Year;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public enum Turnus {
-	monthly {
-		@Override
-		public List<MonthDay> createTurnusPoints() {
-			return Arrays.stream(Month.values()).collect(Collectors.mapping(month -> MonthDay.of(month, 1),
-					Collectors.collectingAndThen(Collectors.toList(), Collections::unmodifiableList)));
-		}
-	},
-	quarterly {
-		@Override
-		public List<MonthDay> createTurnusPoints() {
-			return Collections.unmodifiableList(Arrays.asList(MonthDay.of(Month.JANUARY, 1),
-					MonthDay.of(Month.APRIL, 1), MonthDay.of(Month.JUNE, 1), MonthDay.of(Month.OCTOBER, 1)));
-		}
-	},
-	halfYearly {
-		@Override
-		public List<MonthDay> createTurnusPoints() {
-			return Collections
-					.unmodifiableList(Arrays.asList(MonthDay.of(Month.JANUARY, 1), MonthDay.of(Month.JUNE, 1)));
-		}
-	},
-	annual {
-		@Override
-		public List<MonthDay> createTurnusPoints() {
-			return Collections.singletonList(MonthDay.of(Month.JANUARY, 1));
-		}
-	};
+public enum Turnus
+{
+    monthly
+    {
+        @Override
+        public List<MonthDay> createValueDays(MonthDay initial)
+        {
+            LocalDate initDate = initial.atYear(Year.now().getValue());
+            return IntStream.rangeClosed(0, 11)
+                    .mapToObj(offset -> initDate.plusMonths(offset))
+                    .map(date -> MonthDay.of(date.getMonth(), date.getDayOfMonth()))
+                    .sorted()
+                    .collect(Collectors.toList());
+        }
+    },
+    quarterly
+    {
+        @Override
+        public List<MonthDay> createValueDays(MonthDay initial)
+        {
+            LocalDate initDate = initial.atYear(Year.now().getValue());
+            return IntStream.of(0, 3, 6, 9)
+                    .mapToObj(offset -> initDate.plusMonths(offset))
+                    .map(date -> MonthDay.of(date.getMonth(), date.getDayOfMonth()))
+                    .sorted()
+                    .collect(Collectors.toList());
+        }
+    },
+    halfYearly
+    {
+        @Override
+        public List<MonthDay> createValueDays(MonthDay initial)
+        {
+            LocalDate initDate = initial.atYear(Year.now().getValue());
+            return IntStream.of(0, 6)
+                    .mapToObj(offset -> initDate.plusMonths(offset))
+                    .map(date -> MonthDay.of(date.getMonth(), date.getDayOfMonth()))
+                    .sorted()
+                    .collect(Collectors.toList());
+        }
+    },
+    annual
+    {
+        @Override
+        public List<MonthDay> createValueDays(MonthDay initial)
+        {
+            return Arrays.asList(initial);
+        }
+    };
 
-	abstract public List<MonthDay> createTurnusPoints();
+    abstract public List<MonthDay> createValueDays(MonthDay initial);
 }
