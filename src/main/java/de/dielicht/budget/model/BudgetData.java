@@ -1,7 +1,9 @@
-package de.dielicht.budget.persistence;
+package de.dielicht.budget.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +20,13 @@ public class BudgetData
 
     @JsonSerialize(contentAs = CategoryData.class)
     @JsonDeserialize(contentAs = CategoryData.class)
-    private Map<String, CategoryData> categories = new HashMap<>();
+    private final Map<String, CategoryData> categories = new HashMap<>();
 
     public BudgetData()
     {
     }
 
-    public BudgetData(BigDecimal kontoStand)
+    public BudgetData(final BigDecimal kontoStand)
     {
         this.kontoStand = kontoStand;
     }
@@ -34,7 +36,7 @@ public class BudgetData
         return this.mindestGuthaben;
     }
 
-    public BudgetData setMindestGuthaben(BigDecimal mindestGuthaben)
+    public BudgetData setMindestGuthaben(final BigDecimal mindestGuthaben)
     {
         this.mindestGuthaben = mindestGuthaben;
         return this;
@@ -45,7 +47,7 @@ public class BudgetData
         return this.kontoStand;
     }
 
-    public BudgetData setKontoStand(BigDecimal kontoStand)
+    public BudgetData setKontoStand(final BigDecimal kontoStand)
     {
         this.kontoStand = kontoStand;
         return this;
@@ -56,20 +58,25 @@ public class BudgetData
         return this.berechnungsDatum;
     }
 
-    public BudgetData setBerechnungsDatum(LocalDate berechnungsDatum)
+    public BudgetData setBerechnungsDatum(final LocalDate berechnungsDatum)
     {
         this.berechnungsDatum = berechnungsDatum;
         return this;
     }
 
-    public BudgetData addCategory(CategoryData categoryData)
+    public BudgetData addCategory(final CategoryData categoryData)
     {
         this.categories.put(categoryData.getName(), categoryData);
         return this;
     }
 
-    public CategoryData getCategory(String name)
+    public CategoryData getCategory(final String name)
     {
         return this.categories.get(name);
+    }
+
+    public Collection<CategoryData> getCategories()
+    {
+        return Collections.unmodifiableCollection(this.categories.values());
     }
 }

@@ -1,8 +1,7 @@
-package de.dielicht.budget.persistence;
+package de.dielicht.budget.model;
 
 import java.math.BigDecimal;
-import java.time.Month;
-import java.time.MonthDay;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CategoryData
@@ -12,18 +11,16 @@ public class CategoryData
     private Boolean aktiv = Boolean.TRUE;
     private BigDecimal betrag = BigDecimal.ZERO;
     private Turnus turnus = Turnus.monthly;
-    private MonthDay initialDate = MonthDay.of(Month.JANUARY, 1);
-    private List<MonthDay> valueDays;
+    private LocalDate initialDate = LocalDate.now();
 
     public CategoryData()
     {
         super();
     }
 
-    public CategoryData calculateValueDays()
+    public List<LocalDate> calculateValueDays()
     {
-        this.valueDays = this.turnus.createValueDays(this.initialDate);
-        return this;
+        return this.turnus.createValueDays(this.initialDate);
     }
 
     public BigDecimal getBetrag()
@@ -31,7 +28,7 @@ public class CategoryData
         return this.betrag;
     }
 
-    public CategoryData setBetrag(BigDecimal betrag)
+    public CategoryData setBetrag(final BigDecimal betrag)
     {
         this.betrag = betrag;
         return this;
@@ -43,7 +40,7 @@ public class CategoryData
     }
 
     public CategoryData setAktiv(
-            Boolean aktiv)
+                    final Boolean aktiv)
     {
         this.aktiv = aktiv;
         return this;
@@ -54,7 +51,7 @@ public class CategoryData
         return this.turnus;
     }
 
-    public CategoryData setTurnus(Turnus turnus)
+    public CategoryData setTurnus(final Turnus turnus)
     {
         this.turnus = turnus;
         return this;
@@ -65,31 +62,20 @@ public class CategoryData
         return this.name;
     }
 
-    public CategoryData setName(String name)
+    public CategoryData setName(final String name)
     {
         this.name = name;
         return this;
     }
 
-    public MonthDay getInitialDate()
+    public LocalDate getInitialDate()
     {
-        return initialDate;
+        return this.initialDate;
     }
 
-    public CategoryData setInitialDate(MonthDay initialDate)
+    public CategoryData setInitialDate(final LocalDate initialDate)
     {
         this.initialDate = initialDate;
-        return this;
-    }
-
-    public List<MonthDay> getValueDays()
-    {
-        return valueDays;
-    }
-
-    public CategoryData setValueDays(List<MonthDay> valueDays)
-    {
-        this.valueDays = valueDays;
         return this;
     }
 }

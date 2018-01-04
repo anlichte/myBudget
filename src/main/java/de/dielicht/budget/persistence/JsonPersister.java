@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+import de.dielicht.budget.model.BudgetData;
+
 public class JsonPersister
 {
     public static final Path BUDGET_FILE_PATH = Paths.get("Budgetwerte.txt");
@@ -16,7 +18,7 @@ public class JsonPersister
     public JsonPersister()
     {
         this.jsonMapper = new ObjectMapper()
-        		.registerModule(new JavaTimeModule())
+                .registerModule(new JavaTimeModule())
                 .enable(SerializationFeature.INDENT_OUTPUT);
     }
 
