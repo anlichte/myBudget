@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -75,6 +76,7 @@ public class BudgetData
         return this.categories.get(name);
     }
 
+    @JsonIgnore
     public Collection<CategoryData> getCategories()
     {
         return Collections.unmodifiableCollection(this.categories.values());

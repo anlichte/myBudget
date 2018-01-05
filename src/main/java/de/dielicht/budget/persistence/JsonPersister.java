@@ -12,23 +12,23 @@ import de.dielicht.budget.model.BudgetData;
 
 public class JsonPersister
 {
-    public static final Path BUDGET_FILE_PATH = Paths.get("Budgetwerte.txt");
-    private ObjectMapper jsonMapper;
+    public static final Path BUDGET_FILE_PATH = Paths.get("Budgetwerte.json");
+    private final ObjectMapper jsonMapper;
 
     public JsonPersister()
     {
         this.jsonMapper = new ObjectMapper()
-                .registerModule(new JavaTimeModule())
-                .enable(SerializationFeature.INDENT_OUTPUT);
+                        .registerModule(new JavaTimeModule())
+                        .enable(SerializationFeature.INDENT_OUTPUT);
     }
 
     public BudgetData read() throws IOException
     {
         return this.jsonMapper.readValue(BUDGET_FILE_PATH.toFile(),
-                BudgetData.class);
+                        BudgetData.class);
     }
 
-    public void write(BudgetData data) throws IOException
+    public void write(final BudgetData data) throws IOException
     {
         this.jsonMapper.writeValue(BUDGET_FILE_PATH.toFile(), data);
     }

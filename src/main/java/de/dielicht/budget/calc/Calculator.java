@@ -9,6 +9,9 @@ public class Calculator
 {
     public Stream<PaymentEvent> createPaymentEvents(final BudgetData data, final LocalDate calculationDay)
     {
+        data.getCategories().stream()
+                        .filter(category -> category.isAktiv());
+
         return null;
     }
 

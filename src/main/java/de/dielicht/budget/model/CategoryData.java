@@ -2,6 +2,8 @@ package de.dielicht.budget.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class CategoryData
 {
@@ -15,6 +17,17 @@ public class CategoryData
     public CategoryData()
     {
         super();
+    }
+
+    public Stream<LocalDate> generateValueDates(final LocalDate calculationDay)
+    {
+        final int currentYear = calculationDay.getYear();
+
+        return IntStream.iterate(0, n -> n + this.turnus.getTurnusMonths())
+                        .mapToObj(n -> this.initialDate.plusMonths(n))
+                        .filter(aDate -> aDate.getYear() >= currentYear)
+                        .limit(12)
+                        .filter(aDate -> aDate.getYear() == currentYear);
     }
 
     public BigDecimal getBetrag()
