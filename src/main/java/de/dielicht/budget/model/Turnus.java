@@ -13,7 +13,7 @@ public enum Turnus
         @Override
         public List<LocalDate> createValueDays(final LocalDate initial)
         {
-            return this.generateValueDates(initial, 1, 12);
+            return this.generateValueDates(initial, 1);
         }
     },
     quarterly
@@ -21,7 +21,7 @@ public enum Turnus
         @Override
         public List<LocalDate> createValueDays(final LocalDate initial)
         {
-            return this.generateValueDates(initial, 3, 4);
+            return this.generateValueDates(initial, 3);
         }
     },
     halfYearly
@@ -29,7 +29,7 @@ public enum Turnus
         @Override
         public List<LocalDate> createValueDays(final LocalDate initial)
         {
-            return this.generateValueDates(initial, 6, 2);
+            return this.generateValueDates(initial, 6);
         }
     },
     annual
@@ -37,18 +37,21 @@ public enum Turnus
         @Override
         public List<LocalDate> createValueDays(final LocalDate initial)
         {
-            return this.generateValueDates(initial, 12, 1);
+            return this.generateValueDates(initial, 12);
         }
     };
 
     abstract public List<LocalDate> createValueDays(LocalDate initial);
 
-    public List<LocalDate> generateValueDates(final LocalDate initial, final int turnus, final int limit)
+    public List<LocalDate> generateValueDates(final LocalDate initial, final int turnus)
     {
+        final int currentYear = Year.now().getValue();
+
         return IntStream.iterate(0, n -> n + turnus)
                         .mapToObj(n -> initial.plusMonths(n))
-                        .filter(aDate -> Year.now().getValue() == aDate.getYear())
-                        .limit(limit)
+                        .filter(aDate -> aDate.getYear() >= currentYear)
+                        .limit(12)
+                        .filter(aDate -> aDate.getYear() == currentYear)
                         .collect(Collectors.toList());
     }
 

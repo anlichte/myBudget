@@ -2,7 +2,6 @@ package de.dielicht.budget.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 
 public class CategoryData
 {
@@ -16,11 +15,6 @@ public class CategoryData
     public CategoryData()
     {
         super();
-    }
-
-    public List<LocalDate> calculateValueDays()
-    {
-        return this.turnus.createValueDays(this.initialDate);
     }
 
     public BigDecimal getBetrag()
