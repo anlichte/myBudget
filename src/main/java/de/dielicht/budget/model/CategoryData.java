@@ -26,8 +26,10 @@ public class CategoryData
         return IntStream.iterate(0, n -> n + this.turnus.getTurnusMonths())
                         .mapToObj(n -> this.initialDate.plusMonths(n))
                         .filter(aDate -> aDate.getYear() >= currentYear)
+                        // there can be maximal 12 valueDays per year
                         .limit(12)
-                        .filter(aDate -> aDate.getYear() == currentYear);
+                        .filter(aDate -> aDate.getYear() == currentYear)
+                        .filter(aDate -> !aDate.isBefore(calculationDay));
     }
 
     public BigDecimal getBetrag()

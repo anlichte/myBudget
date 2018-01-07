@@ -1,7 +1,6 @@
 package de.dielicht.budget.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,8 +15,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 public class BudgetData
 {
     private BigDecimal mindestGuthaben = BigDecimal.ZERO;
-    private BigDecimal kontoStand = BigDecimal.ZERO;
-    private LocalDate berechnungsDatum = LocalDate.now();
 
     @JsonSerialize(contentAs = CategoryData.class)
     @JsonDeserialize(contentAs = CategoryData.class)
@@ -27,9 +24,9 @@ public class BudgetData
     {
     }
 
-    public BudgetData(final BigDecimal kontoStand)
+    public BudgetData(final BigDecimal mindestGuthaben)
     {
-        this.kontoStand = kontoStand;
+        this.mindestGuthaben = mindestGuthaben;
     }
 
     public BigDecimal getMindestGuthaben()
@@ -40,28 +37,6 @@ public class BudgetData
     public BudgetData setMindestGuthaben(final BigDecimal mindestGuthaben)
     {
         this.mindestGuthaben = mindestGuthaben;
-        return this;
-    }
-
-    public BigDecimal getKontoStand()
-    {
-        return this.kontoStand;
-    }
-
-    public BudgetData setKontoStand(final BigDecimal kontoStand)
-    {
-        this.kontoStand = kontoStand;
-        return this;
-    }
-
-    public LocalDate getBerechnungsDatum()
-    {
-        return this.berechnungsDatum;
-    }
-
-    public BudgetData setBerechnungsDatum(final LocalDate berechnungsDatum)
-    {
-        this.berechnungsDatum = berechnungsDatum;
         return this;
     }
 

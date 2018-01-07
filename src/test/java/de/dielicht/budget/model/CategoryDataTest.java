@@ -39,6 +39,13 @@ public class CategoryDataTest
         assertThat(list.toString()).isEqualTo("[2018-05-31, 2018-08-31, 2018-11-30]");
 
         list = categoryData
+                        .setInitialDate(LocalDate.of(2017, 5, 31))
+                        .generateValueDates(LocalDate.of(2018, 6, 1))
+                        .collect(Collectors.toList());
+        assertThat(list.size()).isEqualTo(2);
+        assertThat(list.toString()).isEqualTo("[2018-08-31, 2018-11-30]");
+
+        list = categoryData
                         .setInitialDate(LocalDate.of(2018, 12, 31))
                         .generateValueDates(LocalDate.of(2018, 1, 12))
                         .collect(Collectors.toList());
