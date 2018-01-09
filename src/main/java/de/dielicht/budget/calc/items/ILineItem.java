@@ -9,4 +9,6 @@ public interface ILineItem
     BigDecimal getAmount();
 
     BigDecimal getTotal();
+
+    ILineItem setTotal(BigDecimal newTotal);
 }

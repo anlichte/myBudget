@@ -1,10 +1,12 @@
 package de.dielicht.budget.calc.items;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class BaseItem implements ILineItem
 {
     private String text;
+    private LocalDate valueDay = LocalDate.now();
     private BigDecimal amount = BigDecimal.ZERO;
     private BigDecimal total = BigDecimal.ZERO;
 
@@ -50,4 +52,14 @@ public class BaseItem implements ILineItem
         return this;
     }
 
+    public LocalDate getValueDay()
+    {
+        return this.valueDay;
+    }
+
+    public BaseItem setValueDay(final LocalDate valueDay)
+    {
+        this.valueDay = valueDay;
+        return this;
+    }
 }

@@ -1,4 +1,4 @@
-package de.dielicht.budget.core.grouping;
+package de.dielicht.budget.grouping;
 
 import java.time.Month;
 import java.util.function.Function;
