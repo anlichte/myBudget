@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import de.dielicht.budget.calc.items.PaymentItem;
 import de.dielicht.budget.model.BudgetData;
 
-public class PaymentEventStreamBuilder
+public class PaymentItemStreamBuilder
 {
     public Stream<PaymentItem> createEvents(final BudgetData data, final LocalDate calculationDay)
     {

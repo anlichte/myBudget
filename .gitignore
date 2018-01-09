@@ -1,3 +1,5 @@
 /target/
-/Budgetwerte.txt
 /Budgetwerte.json
+/.classpath
+/.project
+/.settings/

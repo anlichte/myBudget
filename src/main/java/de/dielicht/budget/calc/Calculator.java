@@ -28,7 +28,7 @@ public class Calculator
 
         // this stream is not terminated and contains all PaymentEvents in any order and
         // not grouped
-        this.eventStream = new PaymentEventStreamBuilder().createEvents(data, calculationDate);
+        this.eventStream = new PaymentItemStreamBuilder().createEvents(data, calculationDate);
     }
 
     public <T> void start(final Function<PaymentItem, T> groupingStrategy)
