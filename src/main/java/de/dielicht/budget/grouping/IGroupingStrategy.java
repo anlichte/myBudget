@@ -2,16 +2,9 @@ package de.dielicht.budget.grouping;
 
 import java.util.function.Function;
 
-import de.dielicht.budget.calc.items.PaymentItem;
+import de.dielicht.budget.calc.items.BaseItem;
 
 public interface IGroupingStrategy<T>
 {
-    Function<PaymentItem, T> getGroupingStrategy();
-
-    Function<PaymentItem, String> getHeaderText();
-
-    default String getFooterText()
-    {
-        return "Summe";
-    }
+    Function<BaseItem, T> getGroupingStrategy();
 }

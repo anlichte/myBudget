@@ -2,19 +2,13 @@ package de.dielicht.budget.grouping;
 
 import java.util.function.Function;
 
-import de.dielicht.budget.calc.items.PaymentItem;
+import de.dielicht.budget.calc.items.BaseItem;
 
 public class NameGrouping implements IGroupingStrategy<String>
 {
     @Override
-    public Function<PaymentItem, String> getGroupingStrategy()
+    public Function<BaseItem, String> getGroupingStrategy()
     {
-        return (paymentEvent) -> paymentEvent.getText();
-    }
-
-    @Override
-    public Function<PaymentItem, String> getHeaderText()
-    {
-        return (paymentEvent) -> paymentEvent.getText();
+        return item -> item.getText();
     }
 }
