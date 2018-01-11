@@ -16,7 +16,6 @@ public class BaseItem implements ILineItem
         this.text = text;
     }
 
-    @Override
     public String getText()
     {
         return this.text;
@@ -28,7 +27,6 @@ public class BaseItem implements ILineItem
         return this.amount;
     }
 
-    @Override
     public BigDecimal getTotal()
     {
         return this.total;
@@ -40,6 +38,7 @@ public class BaseItem implements ILineItem
         return this;
     }
 
+    @Override
     public BaseItem setTotal(final BigDecimal total)
     {
         this.total = total;

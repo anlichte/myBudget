@@ -5,10 +5,10 @@ import java.util.List;
 public class ItemGroup
 {
     private final BaseItem header;
-    private final List<BaseItem> items;
+    private final List<PaymentItem> items;
     private final BaseItem footer;
 
-    public ItemGroup(final BaseItem header, final List<BaseItem> items, final BaseItem footer)
+    public ItemGroup(final BaseItem header, final List<PaymentItem> items, final BaseItem footer)
     {
         super();
         this.header = header;
@@ -21,7 +21,7 @@ public class ItemGroup
         return this.header;
     }
 
-    public List<BaseItem> getItems()
+    public List<PaymentItem> getItems()
     {
         return this.items;
     }

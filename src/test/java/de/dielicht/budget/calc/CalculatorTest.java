@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import de.dielicht.budget.calc.items.ItemGroup;
 import de.dielicht.budget.model.BudgetData;
-import de.dielicht.budget.model.CategoryData;
+import de.dielicht.budget.model.Payment;
 import de.dielicht.budget.model.Turnus;
 
 public class CalculatorTest
@@ -17,7 +17,7 @@ public class CalculatorTest
     @Test
     public void testSimpleCalculation()
     {
-        final CategoryData catData = new CategoryData()
+        final Payment catData = new Payment()
             .setName("Rundfunk/Fernsehen(GEZ)")
             .setBetrag(new BigDecimal("-52.25"))
             .setInitialDate(LocalDate.of(2017, 5, 31))

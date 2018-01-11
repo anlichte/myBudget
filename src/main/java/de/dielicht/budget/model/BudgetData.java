@@ -16,9 +16,9 @@ public class BudgetData
 {
     private BigDecimal mindestGuthaben = BigDecimal.ZERO;
 
-    @JsonSerialize(contentAs = CategoryData.class)
-    @JsonDeserialize(contentAs = CategoryData.class)
-    private final Map<String, CategoryData> categories = new HashMap<>();
+    @JsonSerialize(contentAs = Payment.class)
+    @JsonDeserialize(contentAs = Payment.class)
+    private final Map<String, Payment> categories = new HashMap<>();
 
     public BudgetData()
     {
@@ -40,19 +40,19 @@ public class BudgetData
         return this;
     }
 
-    public BudgetData addCategory(final CategoryData categoryData)
+    public BudgetData addCategory(final Payment categoryData)
     {
         this.categories.put(categoryData.getName(), categoryData);
         return this;
     }
 
-    public CategoryData getCategory(final String name)
+    public Payment getCategory(final String name)
     {
         return this.categories.get(name);
     }
 
     @JsonIgnore
-    public Collection<CategoryData> getCategories()
+    public Collection<Payment> getPayments()
     {
         return Collections.unmodifiableCollection(this.categories.values());
     }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import org.junit.Test;
 
 import de.dielicht.budget.model.BudgetData;
-import de.dielicht.budget.model.CategoryData;
+import de.dielicht.budget.model.Payment;
 import de.dielicht.budget.model.Turnus;
 
 public class JsonPersisterTest
@@ -19,15 +19,16 @@ public class JsonPersisterTest
     {
         final JsonPersister jp = new JsonPersister();
 
-        final CategoryData catData = new CategoryData()
-                        .setName("Rundfunk/Fernsehen(GEZ)")
-                        .setBetrag(new BigDecimal("-52.25"))
-                        .setInitialDate(LocalDate.of(2017, 5, 31))
-                        .setTurnus(Turnus.quarterly);
+        final Payment catData = new Payment()
+            .setName("Rundfunk/Fernsehen(GEZ)")
+            .setCategory("Haus")
+            .setBetrag(new BigDecimal("-52.25"))
+            .setInitialDate(LocalDate.of(2017, 5, 31))
+            .setTurnus(Turnus.quarterly);
 
         final BudgetData toWrite = new BudgetData(new BigDecimal("1000.45"))
-                        .setMindestGuthaben(new BigDecimal("1000.00"))
-                        .addCategory(catData);
+            .setMindestGuthaben(new BigDecimal("1000.00"))
+            .addCategory(catData);
 
         jp.write(toWrite);
 

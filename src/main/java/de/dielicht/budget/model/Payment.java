@@ -5,16 +5,16 @@ import java.time.LocalDate;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class CategoryData
+public class Payment
 {
     private String name;
-
+    private String category;
     private Boolean aktiv = Boolean.TRUE;
     private BigDecimal betrag = BigDecimal.ZERO;
     private Turnus turnus = Turnus.monthly;
     private LocalDate initialDate = LocalDate.now();
 
-    public CategoryData()
+    public Payment()
     {
         super();
     }
@@ -24,12 +24,12 @@ public class CategoryData
         final int currentYear = calculationDay.getYear();
 
         return IntStream.iterate(0, n -> n + this.turnus.getTurnusMonths())
-                        .mapToObj(n -> this.initialDate.plusMonths(n))
-                        .filter(aDate -> aDate.getYear() >= currentYear)
-                        // there can be maximal 12 valueDays per year
-                        .limit(12)
-                        .filter(aDate -> aDate.getYear() == currentYear)
-                        .filter(aDate -> !aDate.isBefore(calculationDay));
+            .mapToObj(n -> this.initialDate.plusMonths(n))
+            .filter(aDate -> aDate.getYear() >= currentYear)
+            // there can be maximal 12 valueDays per year
+            .limit(12)
+            .filter(aDate -> aDate.getYear() == currentYear)
+            .filter(aDate -> !aDate.isBefore(calculationDay));
     }
 
     public BigDecimal getBetrag()
@@ -37,7 +37,7 @@ public class CategoryData
         return this.betrag;
     }
 
-    public CategoryData setBetrag(final BigDecimal betrag)
+    public Payment setBetrag(final BigDecimal betrag)
     {
         this.betrag = betrag;
         return this;
@@ -48,7 +48,7 @@ public class CategoryData
         return this.aktiv;
     }
 
-    public CategoryData setAktiv(
+    public Payment setAktiv(
                     final Boolean aktiv)
     {
         this.aktiv = aktiv;
@@ -60,7 +60,7 @@ public class CategoryData
         return this.turnus;
     }
 
-    public CategoryData setTurnus(final Turnus turnus)
+    public Payment setTurnus(final Turnus turnus)
     {
         this.turnus = turnus;
         return this;
@@ -71,7 +71,7 @@ public class CategoryData
         return this.name;
     }
 
-    public CategoryData setName(final String name)
+    public Payment setName(final String name)
     {
         this.name = name;
         return this;
@@ -82,9 +82,20 @@ public class CategoryData
         return this.initialDate;
     }
 
-    public CategoryData setInitialDate(final LocalDate initialDate)
+    public Payment setInitialDate(final LocalDate initialDate)
     {
         this.initialDate = initialDate;
+        return this;
+    }
+
+    public String getCategory()
+    {
+        return this.category;
+    }
+
+    public Payment setCategory(final String category)
+    {
+        this.category = category;
         return this;
     }
 }

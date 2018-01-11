@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-public class CategoryDataTest
+public class PaymentTest
 {
     @Test
     public void testGenerateValueDates()
     {
-        final CategoryData categoryData = new CategoryData()
+        final Payment categoryData = new Payment()
                         .setInitialDate(LocalDate.of(2017, 5, 31))
                         .setTurnus(Turnus.monthly);
 

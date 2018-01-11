@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.dielicht.budget.calc.items.BaseItem;
+import de.dielicht.budget.calc.items.ILineItem;
 import de.dielicht.budget.calc.items.ItemGroup;
 import de.dielicht.budget.calc.items.PaymentItem;
 import de.dielicht.budget.model.BudgetData;
@@ -25,22 +26,22 @@ public class Calculator
         this.calculationDate = calculationDate;
         this.balance = balance;
 
-        // this stream is not terminated and contains all PaymentEvents in any order and
+        // this stream is not terminated and contains all payment items in any order and
         // not grouped
         this.eventStream = new PaymentItemStreamBuilder().createEvents(data, calculationDate);
     }
 
     public ItemGroup calculate()
     {
-        final BaseItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
-        final List<BaseItem> paymentItems = this.eventStream.collect(Collectors.toList());
+        final ILineItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
+        final List<ILineItem> paymentItems = this.eventStream.collect(Collectors.toList());
 
-        final BaseItem lastItem = paymentItems.stream()
+        final ILineItem lastItem = paymentItems.stream()
             .reduce(header, (item1, item2) -> item2.setTotal(item1.getTotal().add(item2.getAmount())));
 
         final BaseItem footer = new BaseItem("Saldo").setTotal(lastItem.getTotal())
             .setValueDay(this.calculationDate.with(TemporalAdjusters.lastDayOfYear()));
 
-        return new ItemGroup(header, paymentItems, footer);
+        return new ItemGroup((BaseItem) header, paymentItems, footer);
     }
 }

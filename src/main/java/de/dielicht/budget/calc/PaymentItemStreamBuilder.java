@@ -10,9 +10,9 @@ public class PaymentItemStreamBuilder
 {
     public Stream<PaymentItem> createEvents(final BudgetData data, final LocalDate calculationDay)
     {
-        return data.getCategories().stream()
-            .filter(category -> category.isAktiv())
-            .flatMap(category -> category.generateValueDates(calculationDay)
-                .map(date -> new PaymentItem(category.getName(), date, category.getBetrag())));
+        return data.getPayments().stream()
+            .filter(payments -> payments.isAktiv())
+            .flatMap(payments -> payments.generateValueDates(calculationDay)
+                .map(date -> new PaymentItem(payments.getName(), payments.getCategory(), date, payments.getBetrag())));
     }
 }
