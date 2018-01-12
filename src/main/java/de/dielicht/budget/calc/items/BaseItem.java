@@ -3,7 +3,7 @@ package de.dielicht.budget.calc.items;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class BaseItem implements ILineItem
+public class BaseItem
 {
     private String text;
     private LocalDate valueDay = LocalDate.now();
@@ -21,7 +21,6 @@ public class BaseItem implements ILineItem
         return this.text;
     }
 
-    @Override
     public BigDecimal getAmount()
     {
         return this.amount;
@@ -38,7 +37,6 @@ public class BaseItem implements ILineItem
         return this;
     }
 
-    @Override
     public BaseItem setTotal(final BigDecimal total)
     {
         this.total = total;

@@ -21,7 +21,7 @@ public class ItemGroup
         return this.header;
     }
 
-    public List<PaymentItem> getItems()
+    public List<PaymentItem> getPaymentItems()
     {
         return this.items;
     }

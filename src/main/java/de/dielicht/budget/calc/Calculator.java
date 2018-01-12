@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import de.dielicht.budget.calc.items.BaseItem;
-import de.dielicht.budget.calc.items.ILineItem;
 import de.dielicht.budget.calc.items.ItemGroup;
 import de.dielicht.budget.calc.items.PaymentItem;
 import de.dielicht.budget.model.BudgetData;
@@ -26,22 +25,26 @@ public class Calculator
         this.calculationDate = calculationDate;
         this.balance = balance;
 
-        // this stream is not terminated and contains all payment items in any order and
-        // not grouped
-        this.eventStream = new PaymentItemStreamBuilder().createEvents(data, calculationDate);
+        // this stream is not terminated and contains all payment items in order but not
+        // grouped
+        this.eventStream = new PaymentItemStreamBuilder().createEvents(data, calculationDate)
+            .sorted((item1, item2) -> item1.getValueDay().compareTo(item2.getValueDay()));
     }
 
     public ItemGroup calculate()
     {
-        final ILineItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
-        final List<ILineItem> paymentItems = this.eventStream.collect(Collectors.toList());
+        final BaseItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
+        final List<PaymentItem> paymentItems = this.eventStream.collect(Collectors.toList());
 
-        final ILineItem lastItem = paymentItems.stream()
-            .reduce(header, (item1, item2) -> item2.setTotal(item1.getTotal().add(item2.getAmount())));
+        final BaseItem lastItem = paymentItems.stream()
+            .reduce(header,
+                (final BaseItem item1, final PaymentItem item2) -> item2
+                    .setTotal(item1.getTotal().add(item2.getAmount())),
+                (item1, item2) -> item2);
 
         final BaseItem footer = new BaseItem("Saldo").setTotal(lastItem.getTotal())
             .setValueDay(this.calculationDate.with(TemporalAdjusters.lastDayOfYear()));
 
-        return new ItemGroup((BaseItem) header, paymentItems, footer);
+        return new ItemGroup(header, paymentItems, footer);
     }
 }
