@@ -28,12 +28,12 @@ public class JsonPersisterTest
 
         final BudgetData toWrite = new BudgetData(new BigDecimal("1000.45"))
             .setMindestGuthaben(new BigDecimal("1000.00"))
-            .addCategory(catData);
+            .addPayment(catData);
 
         jp.write(toWrite);
 
         final BudgetData readed = jp.read();
         assertThat(readed.getMindestGuthaben()).isEqualTo(new BigDecimal("1000.00"));
-        assertThat(readed.getCategory("Rundfunk/Fernsehen(GEZ)").getTurnus()).isEqualTo(Turnus.quarterly);
+        assertThat(readed.getPayment("Rundfunk/Fernsehen(GEZ)").getTurnus()).isEqualTo(Turnus.quarterly);
     }
 }

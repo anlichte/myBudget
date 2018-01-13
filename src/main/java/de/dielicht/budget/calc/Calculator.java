@@ -31,20 +31,20 @@ public class Calculator
             .sorted((item1, item2) -> item1.getValueDay().compareTo(item2.getValueDay()));
     }
 
-    public ItemGroup calculate()
+    public ItemGroup<PaymentItem> calculate()
     {
         final BaseItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
         final List<PaymentItem> paymentItems = this.eventStream.collect(Collectors.toList());
 
         final BaseItem lastItem = paymentItems.stream()
-            .reduce(header,
-                (final BaseItem item1, final PaymentItem item2) -> item2
-                    .setTotal(item1.getTotal().add(item2.getAmount())),
-                (item1, item2) -> item2);
+            // to fulfill the type requirements at reduce
+            .map(in -> (BaseItem) in)
+            // now we can use the 2 args reduce func and not that with 3 args
+            .reduce(header, (item1, item2) -> item2.setTotal(item1.getTotal().add(item2.getAmount())));
 
         final BaseItem footer = new BaseItem("Saldo").setTotal(lastItem.getTotal())
             .setValueDay(this.calculationDate.with(TemporalAdjusters.lastDayOfYear()));
 
-        return new ItemGroup(header, paymentItems, footer);
+        return new ItemGroup<PaymentItem>(header, paymentItems, footer);
     }
 }

@@ -2,13 +2,15 @@ package de.dielicht.budget.calc.items;
 
 import java.util.List;
 
-public class ItemGroup
+import com.google.common.base.MoreObjects;
+
+public class ItemGroup<T>
 {
     private final BaseItem header;
-    private final List<PaymentItem> items;
+    private final List<T> items;
     private final BaseItem footer;
 
-    public ItemGroup(final BaseItem header, final List<PaymentItem> items, final BaseItem footer)
+    public ItemGroup(final BaseItem header, final List<T> items, final BaseItem footer)
     {
         super();
         this.header = header;
@@ -21,7 +23,7 @@ public class ItemGroup
         return this.header;
     }
 
-    public List<PaymentItem> getPaymentItems()
+    public List<T> getItems()
     {
         return this.items;
     }
@@ -29,5 +31,15 @@ public class ItemGroup
     public BaseItem getFooter()
     {
         return this.footer;
+    }
+
+    @Override
+    public String toString()
+    {
+        return MoreObjects.toStringHelper(this)
+            .add("\nheader", this.getHeader())
+            .add("\npayments", this.getItems())
+            .add("\nfooter", this.getFooter())
+            .toString();
     }
 }

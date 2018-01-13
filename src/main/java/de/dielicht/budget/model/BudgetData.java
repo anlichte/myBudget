@@ -40,13 +40,13 @@ public class BudgetData
         return this;
     }
 
-    public BudgetData addCategory(final Payment categoryData)
+    public BudgetData addPayment(final Payment categoryData)
     {
         this.categories.put(categoryData.getName(), categoryData);
         return this;
     }
 
-    public Payment getCategory(final String name)
+    public Payment getPayment(final String name)
     {
         return this.categories.get(name);
     }

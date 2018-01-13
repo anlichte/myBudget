@@ -3,12 +3,15 @@ package de.dielicht.budget.calc.items;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.MoreObjects.ToStringHelper;
+
 public class BaseItem
 {
     private String text;
-    private LocalDate valueDay = LocalDate.now();
-    private BigDecimal amount = BigDecimal.ZERO;
-    private BigDecimal total = BigDecimal.ZERO;
+    private LocalDate valueDay = null;
+    private BigDecimal amount = null;
+    private BigDecimal total = null;
 
     public BaseItem(final String text)
     {
@@ -58,5 +61,21 @@ public class BaseItem
     {
         this.valueDay = valueDay;
         return this;
+    }
+
+    protected ToStringHelper toStringHelper()
+    {
+        return MoreObjects.toStringHelper(this)
+            .omitNullValues()
+            .add("text", this.getText())
+            .add("date", this.getValueDay())
+            .add("amount", this.getAmount())
+            .add("total", this.getTotal());
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.toStringHelper().toString();
     }
 }
