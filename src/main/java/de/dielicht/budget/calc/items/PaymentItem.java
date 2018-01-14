@@ -9,9 +9,9 @@ public class PaymentItem extends BaseItem
 {
     private final String category;
 
-    public PaymentItem(final String text, final String category, final LocalDate valueDay, final BigDecimal amount)
+    public PaymentItem(final String name, final String category, final LocalDate valueDay, final BigDecimal amount)
     {
-        super(text);
+        super(name);
         this.category = category;
         this.setAmount(amount);
         this.setValueDay(valueDay);

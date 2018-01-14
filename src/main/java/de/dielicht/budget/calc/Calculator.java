@@ -25,9 +25,10 @@ public class Calculator
         this.calculationDate = calculationDate;
         this.balance = balance;
 
-        // this stream is not terminated and contains all payment items in order but not
-        // grouped
-        this.eventStream = new PaymentItemStreamBuilder().createEvents(data, calculationDate)
+        // this stream has no terminal operation so it's not executed
+        // and contains all payment items in order but not grouped
+        this.eventStream = new PaymentItemStreamBuilder()
+            .createEvents(data, calculationDate)
             .sorted((item1, item2) -> item1.getValueDay().compareTo(item2.getValueDay()));
     }
 
@@ -36,6 +37,7 @@ public class Calculator
         final BaseItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
         final List<PaymentItem> paymentItems = this.eventStream.collect(Collectors.toList());
 
+        // this stream has side effects: we set the total field on all payments
         final BaseItem lastItem = paymentItems.stream()
             // to fulfill the type requirements at reduce
             .map(in -> (BaseItem) in)
