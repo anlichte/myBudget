@@ -10,13 +10,11 @@ public class BaseItem
 {
     private String text;
     private LocalDate valueDay = null;
-    private BigDecimal amount = null;
     private BigDecimal total = null;
 
-    public BaseItem(final String text)
+    public BaseItem()
     {
         super();
-        this.text = text;
     }
 
     public String getText()
@@ -24,32 +22,9 @@ public class BaseItem
         return this.text;
     }
 
-    public BigDecimal getAmount()
-    {
-        return this.amount;
-    }
-
     public BigDecimal getTotal()
     {
         return this.total;
-    }
-
-    public BaseItem setAmount(final BigDecimal amount)
-    {
-        this.amount = amount;
-        return this;
-    }
-
-    public BaseItem setTotal(final BigDecimal total)
-    {
-        this.total = total;
-        return this;
-    }
-
-    public BaseItem setText(final String text)
-    {
-        this.text = text;
-        return this;
     }
 
     public LocalDate getValueDay()
@@ -57,7 +32,19 @@ public class BaseItem
         return this.valueDay;
     }
 
-    public BaseItem setValueDay(final LocalDate valueDay)
+    public BaseItem withTotal(final BigDecimal total)
+    {
+        this.total = total;
+        return this;
+    }
+
+    public BaseItem withText(final String text)
+    {
+        this.text = text;
+        return this;
+    }
+
+    public BaseItem withValueDay(final LocalDate valueDay)
     {
         this.valueDay = valueDay;
         return this;
@@ -69,7 +56,6 @@ public class BaseItem
             .omitNullValues()
             .add("text", this.getText())
             .add("date", this.getValueDay())
-            .add("amount", this.getAmount())
             .add("total", this.getTotal());
     }
 

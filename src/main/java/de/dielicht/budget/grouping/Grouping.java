@@ -21,13 +21,13 @@ public class Grouping
             .sorted()
             .map(key ->
             {
-                final BaseItem header = new BaseItem(grouping.getText(key));
+                final BaseItem header = new BaseItem().withText(grouping.getText(key));
 
                 final BigDecimal sum = groupedBy.get(key).stream()
                     .map(PaymentItem::getAmount)
                     .reduce(BigDecimal.ZERO, (amount1, amount2) -> amount1.add(amount2));
 
-                final BaseItem footer = new BaseItem("Summe").setAmount(sum);
+                final BaseItem footer = new BaseItem().withText("Summer").withTotal(sum);
 
                 return new ItemGroup<PaymentItem>(header, groupedBy.get(key), footer);
             })

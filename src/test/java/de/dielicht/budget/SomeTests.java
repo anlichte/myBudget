@@ -19,6 +19,6 @@ public class SomeTests
 
         final LocalDate fromCustomPattern = LocalDate.parse("30.02.2016",
             dateTimeFormatter);
-        assertThat(fromCustomPattern.getDayOfMonth()).isEqualTo(20);
+        assertThat(fromCustomPattern.getDayOfMonth()).isEqualTo(29);
     }
 }

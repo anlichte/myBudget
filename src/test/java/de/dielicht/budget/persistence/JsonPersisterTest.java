@@ -23,5 +23,6 @@ public class JsonPersisterTest
         final BudgetData readed = jp.read();
         assertThat(readed.getMindestGuthaben()).isEqualTo(new BigDecimal("1000.00"));
         assertThat(readed.getPayment("Rundfunk/Fernsehen(GEZ)").getTurnus()).isEqualTo(Turnus.quarterly);
+        assertThat(readed.getPayment("Rundfunk/Fernsehen(GEZ)").getBetrag()).isEqualTo(new BigDecimal("-50.00"));
     }
 }

@@ -9,8 +9,8 @@ public class Payment
 {
     private String name;
     private String category;
-    private Boolean aktiv = Boolean.TRUE;
-    private BigDecimal betrag = BigDecimal.ZERO;
+    private Boolean activ = Boolean.TRUE;
+    private BigDecimal amount = BigDecimal.ZERO;
     private Turnus turnus = Turnus.monthly;
     private LocalDate initialDate = LocalDate.now();
 
@@ -26,6 +26,7 @@ public class Payment
         return IntStream.iterate(0, n -> n + this.turnus.getTurnusMonths())
             .mapToObj(n -> this.initialDate.plusMonths(n))
             .filter(aDate -> aDate.getYear() >= currentYear)
+            // Java 8 has no dropWhile & takeUntil so this is a dirty workaround
             // there can be maximal 12 valueDays per year
             .limit(12)
             .filter(aDate -> aDate.getYear() == currentYear)
@@ -34,24 +35,23 @@ public class Payment
 
     public BigDecimal getBetrag()
     {
-        return this.betrag;
+        return this.amount;
     }
 
     public Payment setBetrag(final BigDecimal betrag)
     {
-        this.betrag = betrag;
+        this.amount = betrag;
         return this;
     }
 
     public Boolean isAktiv()
     {
-        return this.aktiv;
+        return this.activ;
     }
 
-    public Payment setAktiv(
-                    final Boolean aktiv)
+    public Payment setAktiv(final Boolean aktiv)
     {
-        this.aktiv = aktiv;
+        this.activ = aktiv;
         return this;
     }
 

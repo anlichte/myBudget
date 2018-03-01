@@ -34,18 +34,17 @@ public class Calculator
 
     public ItemGroup<PaymentItem> calculate()
     {
-        final BaseItem header = new BaseItem("Saldo").setTotal(this.balance).setValueDay(this.calculationDate);
         final List<PaymentItem> paymentItems = this.eventStream.collect(Collectors.toList());
 
         // this stream has side effects: we set the total field on all payments
-        final BaseItem lastItem = paymentItems.stream()
-            // to fulfill the type requirements at reduce
-            .map(in -> (BaseItem) in)
-            // now we can use the 2 args reduce func and not that with 3 args
-            .reduce(header, (item1, item2) -> item2.setTotal(item1.getTotal().add(item2.getAmount())));
+        final PaymentItem lastItem = paymentItems.stream()
+            .reduce(new PaymentItem(this.balance),
+                (item1, item2) -> (PaymentItem) item2.withTotal(item1.getTotal().add(item2.getAmount())));
 
-        final BaseItem footer = new BaseItem("Saldo").setTotal(lastItem.getTotal())
-            .setValueDay(this.calculationDate.with(TemporalAdjusters.lastDayOfYear()));
+        final BaseItem header = new BaseItem().withText("Saldo").withTotal(this.balance)
+            .withValueDay(this.calculationDate);
+        final BaseItem footer = new BaseItem().withText("Saldo").withTotal(lastItem.getTotal())
+            .withValueDay(this.calculationDate.with(TemporalAdjusters.lastDayOfYear()));
 
         return new ItemGroup<PaymentItem>(header, paymentItems, footer);
     }
